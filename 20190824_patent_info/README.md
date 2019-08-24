@@ -2,9 +2,9 @@
 
 ### Date: 2019-08-24  
 
-###Author: huiyanglu  
+### Author: huiyanglu  
 
-####Content:   
+#### Content:   
 
 本项目用于根据专利号爬取对应专利的具体信息，包括专利名称、发明人、申请时间、公开时间、是否有权等。  
 

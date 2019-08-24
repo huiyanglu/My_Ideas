@@ -2,9 +2,9 @@
 
 ### Date: 2019-08-23  
 
-###Author: huiyanglu  
+### Author: huiyanglu  
 
-####Content:    
+#### Content:    
   
 运用requests爬取豆瓣互联网分类下的所有书籍信息，包括书名、作者、ID、打分人数、分数等。  
   
