@@ -10,7 +10,7 @@ import re
 import time
 
 def main(url):
-    rst = request.get(url,3) #回调函数
+    rst = request.get(url,3) 
     max_num = BeautifulSoup(rst.text, 'lxml').find('div', {'class': 'paginator'}).find_all('a')[-2].get_text()
     bashurl = 'https://book.douban.com/tag/%E4%BA%92%E8%81%94%E7%BD%91?start='
     for num in range(0,int(max_num)+1):
@@ -20,7 +20,7 @@ def main(url):
 
 
 def each_page(num,url):
-    rst2 = request.get(url, 3)  # 回调函数
+    rst2 = request.get(url, 3) 
     rst2.encoding = 'utf-8'
     tds = BeautifulSoup(rst2.text, 'lxml').find('ul', {'class': 'subject-list'}).find_all('li')
     for td in tds:
@@ -43,6 +43,25 @@ def each_book(td):
     author = td.find('div',{'class':'pub'}).get_text().split('/')[0]
     author2 = "".join(author.split())
     item['author'] = author2
+    pub_date = td.find('div',{'class':'pub'}).get_text().split('/')
+    try:
+        pub_date2 = pub_date[-2]
+        pub_date3 = "".join(pub_date2.split())
+        if pub_date3[:4].isdigit():
+            item['pub_date'] = int(pub_date3[:4])
+        else:
+            item['pub_date'] = 0
+    except IndexError:
+        item['pub_date'] = 0
+
+    price = td.find('div',{'class':'pub'}).get_text().split('/')[-1]
+    try:
+        price2 = re.findall(r'\d+',price)[0]
+    except IndexError:
+        item['price'] = 0
+    else:
+        item['price'] = price2
+
     about_rate = td.find('div',{'class':'star clearfix'})
     rate = 0
     if about_rate.find('span', {'class': 'rating_nums'}):
@@ -63,14 +82,14 @@ def save_data(item):
         host='localhost',
         port=3306,
         user='root',
-        passwd='87869973lhy',
+        passwd='********',
         db='douban_bk',
         charset='utf8'
     )
     # 获取游标
     cursor = connect.cursor()
-    sql = "INSERT INTO internet_bk VALUES ('%s', '%s', '%s', '%s', '%s', '%s')"
-    data = (str(item['name']),str(item['author']),str(item['name_id']),str(item['name_url']),str(item['rated_num']),str(item['rate']))
+    sql = "INSERT INTO internet_bk_all VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')"
+    data = (str(item['name']),str(item['author']),int(item['pub_date']),int(item['price']),str(item['rated_num']),str(item['rate']),str(item['name_id']),str(item['name_url']))
     print(data)
     cursor.execute(sql % data)
     connect.commit()
