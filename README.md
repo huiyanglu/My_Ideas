@@ -6,10 +6,10 @@ Time: 2019-02-28
 Content: 每周任务选择计划安排  
   
 ---
-Connect images:  
-Time: 2019-08-09  
+File Processing:  
+Time: 2019-08-09   
+Updated in 2019-10-06
 Content: 对文件进行批量处理  
-
 
 ---
 Douban analysis:
