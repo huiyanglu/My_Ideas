@@ -24,3 +24,7 @@
 douban_internet_bk.py  
 
 爬虫代码，爬取豆瓣互联网分类下的所有999本书的信息。  
+  
+douban_analysis.ipynb  
+
+jupyter notebook代码，对爬取的数据进行分析的过程。
